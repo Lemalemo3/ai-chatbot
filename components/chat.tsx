@@ -1,15 +1,21 @@
 
 'use client'
 
-import { useChat } from 'ai/react'
+import { useChat, Message } from 'ai/react'
 import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 
-export function Chat({ id }: { id?: string }) {
+export interface ChatProps extends React.ComponentProps<'div'> {
+  id?: string
+  initialMessages?: Message[]
+  session?: any
+}
+
+export function Chat({ id, initialMessages = [], session }: ChatProps) {
   const { messages, append, reload, stop, isLoading, input, setInput } = useChat({
-    initialMessages: [],
+    initialMessages,
     body: { id }
   })
 
